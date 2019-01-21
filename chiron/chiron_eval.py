@@ -29,6 +29,7 @@ from six.moves import range
 import threading
 from collections import defaultdict
 
+
 def sparse2dense(predict_val):
     """Transfer a sparse input in to dense representation
     Args:
@@ -125,6 +126,7 @@ def qs(consensus, consensus_qs, output_standard='phred+33'):
     elif output_standard == 'phred+33':
         q_string = [chr(x + 33) for x in quality_score.astype(int)]
         return ''.join(q_string)
+
 
 def write_output(segments, 
                  consensus, 

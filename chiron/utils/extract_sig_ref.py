@@ -74,7 +74,7 @@ def extract(FLAGS):
                 if len(reference) > 0:
                     with open(os.path.join(ref_folder, os.path.splitext(file_n)[0] + '_ref.fastq'), 'w+') as ref_file:
                         ref_file.write(reference)
-                if (FLAGS.test_number is not None) and (count >=FLAGS.test_number):
+                if ("test_number" in FLAGS) and (FLAGS.test_number is not None) and (count >= FLAGS.test_number):
                     return
 
 def extract_file(input_file,mode = 'dna'):
@@ -86,15 +86,15 @@ def extract_file(input_file,mode = 'dna'):
     except Exception as e:
         logging.error(e)
         raise Exception(e)
-    raw_signal = list(input_data['/Raw/Reads'].values())[0]['Signal'].value
+    raw_signal = list(input_data['/Raw/Reads'].values())[0]['Signal'][()]  # .value
     if mode == 'rna':
         raw_signal = raw_signal[::-1]
     try:
-        reference = input_data['Analyses/Basecall_1D_000/BaseCalled_template/Fastq'].value
+        reference = input_data['Analyses/Basecall_1D_000/BaseCalled_template/Fastq'][()]  # .value
         reference = '@%s\n'%(os.path.basename(input_file).split('.')[0]) + '\n'.join(reference.decode('UTF-8').split('\n')[1:])
     except:
         try:
-            reference = input_data['Analyses/Alignment_000/Aligned_template/Fasta'].value
+            reference = input_data['Analyses/Alignment_000/Aligned_template/Fasta'][()]  # .value
         except Exception as e:
             logging.info('%s has no reference.'%(input_file))
             reference = ''

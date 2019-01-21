@@ -16,7 +16,7 @@ from chiron.utils import raw
 from chiron.utils.extract_sig_ref import extract
 
 
-def evaluation(args):
+def evaluation(args: argparse.Namespace):
     FLAGS = args
     FLAGS.input_dir = FLAGS.input
     FLAGS.output_dir = FLAGS.output
